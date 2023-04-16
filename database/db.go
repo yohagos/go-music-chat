@@ -2,20 +2,59 @@ package database
 
 import (
 	"database/sql"
+	"encoding/json"
+	"time"
 
-	_ "github.com/mattn/go-sqlite3"
+	gmc "go-music-chat/database"
+
+	_ "modernc.org/sqlite"
 )
-
-type Users struct {
-	id int32
-}
 
 func Connect(file string) {
 	println("testing sqlite3 db..", file)
-	db, err := sql.Open("sqlite3", file)
+	db, err := sql.Open("sqlite", file)
 	if err != nil {
 		panic(err)
 	}
-	println(db.Stats().OpenConnections)
-	defer  db.Close()
+
+	getAllUsers(db)
+	//insertNewUser(db)
+	//getAllUsers(db)
+
+	defer db.Close()
+}
+
+func getAllUsers(db *sql.DB) {
+	stmt := "select * from users"
+	rows, err := db.Query(stmt)
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	for rows.Next() {
+		var res gmc.Users
+		if err = rows.Scan(&res.ID, &res.Firstname, &res.Lastname, &res.Username, &res.Password, &res.Profile_photo, &res.Created_at); err != nil {
+			panic(err.Error())
+		}
+		jsonBytes, _ := json.Marshal(res)
+		str := string(jsonBytes)
+		println(str)
+	}
+}
+
+func insertNewUser(db *sql.DB) {
+	stmt, err := db.Prepare("INSERT INTO users(firstname, lastname, username, password, profile_photo, created_at) values (?,?,?,?,?,?)")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer stmt.Close()
+
+	currentTIme := time.Now()
+	println(currentTIme.Format("2006-01-02 15:04:05"))
+
+	_, err = stmt.Exec("büs", "geyik", "ergül", "baburch", "", currentTIme.Format("2006-01-02 15:04:05"))
+	if err != nil {
+		panic(err.Error())
+	}
 }

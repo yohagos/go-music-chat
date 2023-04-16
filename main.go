@@ -1,11 +1,17 @@
 package main
 
 import (
-	"fmt"
+	"go-music-chat/database"
 	"go-music-chat/server"
+	"net/http"
+	"os"
 )
 
 func main() {
-	fmt.Println("test")
-	server.GetMessage()
+	database.Connect("music.db")
+	os.Exit(12)
+	
+	router := server.NewRouter()
+	
+	http.ListenAndServe(":8080",router)
 }

@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"time"
 
-	gmc "go-music-chat/database"
-
 	_ "modernc.org/sqlite"
 )
 
@@ -33,7 +31,7 @@ func getAllUsers(db *sql.DB) {
 	}
 
 	for rows.Next() {
-		var res gmc.Users
+		var res UsersModel
 		if err = rows.Scan(&res.ID, &res.Firstname, &res.Lastname, &res.Username, &res.Password, &res.Profile_photo, &res.Created_at); err != nil {
 			panic(err.Error())
 		}

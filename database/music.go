@@ -1,6 +1,6 @@
-package models
+package database
 
-type Songs struct {
+type SongsModel struct {
 	ID int32 `json:"id"`
 	Title string `json:"title"`
 	Artist string `json:"artist"`

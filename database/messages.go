@@ -1,6 +1,6 @@
-package models
+package database
 
-type Message struct {
+type MessageModel struct {
 	ID int32 `json:"id"`
 	Receiver string `json:"receiver"`
 	Text string `json:"text"`

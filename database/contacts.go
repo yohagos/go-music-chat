@@ -1,6 +1,6 @@
-package models
+package database
 
-type Contact struct {
+type ContactModel struct {
 	ID int32 `json:"id"`
 	User string `json:"user"`
 	Contact string `json:"contact"`

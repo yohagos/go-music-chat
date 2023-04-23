@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS users(id int auto_increment, username text primary key,  firstname text, lastname text, password text, profile_photo text, created_at text);
+CREATE TABLE IF NOT EXISTS music(id int auto_increment, title text, artist text, featuring text, genre text, path text, uploaded_at text, uploaded_at text);
+CREATE TABLE IF NOT EXISTS messages(id int auto_increment, receiver text, text text, send_date text, sender text, group_id int);
+CREATE TABLE IF NOT EXISTS contacts(id int auto_increment, user text, contact text, since text);
+CREATE TABLE IF NOT EXISTS contactRequests(id int auto_increment, user text, requested text);

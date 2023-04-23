@@ -8,7 +8,9 @@ import (
 )
 
 func main() {
-	database.Connect("music.db")
+	database.ConnectDB("music.db")
+	database.CreateAllTables()
+
 	os.Exit(12)
 	
 	router := server.NewRouter()

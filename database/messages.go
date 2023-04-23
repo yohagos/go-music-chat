@@ -8,3 +8,11 @@ type MessageModel struct {
 	Sender string `json:"sender"`
 	Group_ID string `json:"group_id"`
 }
+
+type Message struct {
+	Receiver string `json:"receiver"`
+	Text string `json:"text"`
+	Send_date string `json:"send_date"`
+	Sender string `json:"sender"`
+	Group_ID string `json:"group_id"`
+}

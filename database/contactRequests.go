@@ -1,9 +1,17 @@
 package database
 
-import "go-music-chat/util"
+import (
+	"go-music-chat/util"
+	"sync"
+)
 
 type ContactRequestModel struct {
 	ID        int32  `json:"id"`
+	User      string `json:"user"`
+	Requested string `json:"requested"`
+}
+
+type ContactRequest struct {
 	User      string `json:"user"`
 	Requested string `json:"requested"`
 }
@@ -58,7 +66,13 @@ func AcceptRequest(user, request string) {
 			panic(err.Error())
 		}
 	}
-	
+
+	var wg sync.WaitGroup
+	acceptChannel := make(chan int, 1)
+	wg.Add(3)
+	go CreateNewContact(user, request)
 	DeclineRequest(user, request)
 	closeDB(db)
+	wg.Wait()
+	close(acceptChannel)
 }

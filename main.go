@@ -12,7 +12,7 @@ func main() {
 	// database.GetAllUsers()
 	// database.GetAllSongs()
 	// database.FindSongByArtist("bausa")
-	// database.CreateRequest("yosie", "yosef")
+	//database.CreateRequest("yosie", "yosef")
 	database.AcceptRequest("yosie", "yosef")
 
 	os.Exit(12)

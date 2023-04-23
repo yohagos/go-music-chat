@@ -16,6 +16,15 @@ type UsersModel struct {
 	Created_at    string `json:"created_at"`
 }
 
+type Users struct {
+	Firstname     string `json:"firstname"`
+	Lastname      string `json:"lastname"`
+	Username      string `json:"username"`
+	Password      string `json:"password"`
+	Profile_photo string `json:"profile_photo"`
+	Created_at    string `json:"created_at"`
+}
+
 func GetAllUsers() []UsersModel {
 	db := connectDB()
 	stmt := "select * from users"
@@ -37,7 +46,7 @@ func GetAllUsers() []UsersModel {
 	return data
 }
 
-func InsertNewUser(user UsersModel) {
+func AddNewUser(user Users) {
 	db := connectDB()
 	stmt, err := db.Prepare("INSERT INTO users(firstname, lastname, username, password, profile_photo, created_at) values (?,?,?,?,?,?)")
 	util.CheckErr(err)

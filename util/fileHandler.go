@@ -24,6 +24,6 @@ func CreateUserFolder(user string) string {
 		os.Mkdir(path, 0755)
 		return path
 	}
-	return ""
+	return path
 }
 

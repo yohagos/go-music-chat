@@ -20,7 +20,6 @@ func ReadInDatabaseTables() []string {
 	sc := bufio.NewScanner(f)
 	for sc.Scan() {
 		result = append(result, sc.Text())
-		println(sc.Text())
 	}
 	return result
 }

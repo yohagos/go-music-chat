@@ -27,6 +27,7 @@ type Users struct {
 
 func GetAllUsers() []UsersModel {
 	db := connectDB()
+	defer closeDB(db)
 	stmt := "select * from users"
 	rows, err := db.Query(stmt)
 	util.CheckErr(err)
@@ -42,12 +43,12 @@ func GetAllUsers() []UsersModel {
 		data = append(data, res)
 	}
 
-	closeDB(db)
 	return data
 }
 
-func AddNewUser(user Users) {
+func (user *Users) AddNewUser() {
 	db := connectDB()
+	defer closeDB(db)
 	stmt, err := db.Prepare("INSERT INTO users(firstname, lastname, username, password, profile_photo, created_at) values (?,?,?,?,?,?)")
 	util.CheckErr(err)
 	defer stmt.Close()
@@ -56,11 +57,11 @@ func AddNewUser(user Users) {
 
 	_, err = stmt.Exec("büs", "geyik", "ergül", "baburch", "", util.CreateTimestamp())
 	util.CheckErr(err)
-	closeDB(db)
 }
 
 func FindUser(user string) UsersModel {
 	db := connectDB()
+	defer closeDB(db)
 	stmt, err := db.Prepare("SELECT * FROM users WHERE username == ?")
 	util.CheckErr(err)
 
@@ -75,14 +76,15 @@ func FindUser(user string) UsersModel {
 		}
 	}
 
-	closeDB(db)
 	return res
 }
 
 func UpdateProfilePhoto(user string, photo string) {
 	db := connectDB()
+	defer closeDB(db)
 	stmt, err := db.Prepare("select * from users where username = ?")
 	util.CheckErr(err)
+	defer stmt.Close()
 
 	rows, err := stmt.Query(user)
 	util.CheckErr(err)
@@ -99,17 +101,15 @@ func UpdateProfilePhoto(user string, photo string) {
 
 	_, err = stmt.Exec(photo, user)
 	util.CheckErr(err)
-	defer stmt.Close()
-	closeDB(db)
 }
 
 func DeleteUser(user string) {
 	db := connectDB()
+	defer closeDB(db)
 	stmt, err := db.Prepare("DELETE from users where username = ?")
 	util.CheckErr(err)
-
+	defer stmt.Close()
 	_, err = stmt.Exec(user)
 	util.CheckErr(err)
-	defer stmt.Close()
-	closeDB(db)
+	
 }

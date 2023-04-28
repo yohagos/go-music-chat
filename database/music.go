@@ -34,7 +34,7 @@ func GetAllSongs() []SongsModel {
 	return data
 }
 
-func AddNewSong(song SongsModel) {
+func (song *SongsModel) AddNewSong() {
 	db := connectDB()
 	stmt, err := db.Prepare("INSERT INTO music(title, artist, featuring, genre, path, uploaded_at, uploaded_by) values (?, ?, ?, ?, ?, ?, ?)")
 	util.CheckErr(err)

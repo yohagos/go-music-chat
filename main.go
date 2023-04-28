@@ -5,7 +5,6 @@ import (
 	"go-music-chat/server"
 
 	"net/http"
-	"os"
 )
 
 func main() {
@@ -24,9 +23,7 @@ func main() {
 	newMessage.Send_date = util.CreateTimestamp()
 	newMessage.Text = "test5"
 	newMessage.AddMessage() */
-	database.GetAllMessages("yosie2", "yosie")
-
-	os.Exit(12)
+	//database.GetAllMessages("yosie2", "yosie")
 	
 	router := server.NewRouter()
 	http.ListenAndServe(":8080",router)
